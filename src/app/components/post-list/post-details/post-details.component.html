@@ -1,0 +1,11 @@
+<div class="card"  *ngIf="getData() | async as postData">
+  <div class="card-body">
+    <h5 class="card-title">{{ postData.title }}</h5>
+    <p class="card-text">
+      {{ postData.body }}
+    </p>
+  </div>
+  <div class="card-footer">
+    <small class="text-muted">Posted by {{ postData.userId }}</small>
+  </div>
+</div>
