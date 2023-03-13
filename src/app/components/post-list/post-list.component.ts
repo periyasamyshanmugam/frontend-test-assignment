@@ -1,10 +1,11 @@
 import { Post } from './../../models/post.model';
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
 import { selectList } from 'src/app/store/app.reducer';
-import { GetList } from '../store/actions/post.actions';
+import { GetFilteredPostList, GetList } from '../store/actions/post.actions';
 import { State } from '../store/reducers/post.reducer';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-post-list',
@@ -13,6 +14,7 @@ import { State } from '../store/reducers/post.reducer';
 })
 export class PostListComponent implements OnInit {
   postList: Observable<Post[]>;
+  filter: FormControl = new FormControl();
 
   constructor(public store: Store<State>) {
     this.postList = store.pipe(select(selectList));
@@ -20,5 +22,10 @@ export class PostListComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(GetList());
+
+    this.filter.valueChanges
+      .pipe(debounceTime(500), distinctUntilChanged())
+      // no need to unsubscribe because subscribing to self
+      .subscribe((searchString: string) => this.store.dispatch(GetFilteredPostList({ searchString })));
   }
 }

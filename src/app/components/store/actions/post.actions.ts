@@ -16,3 +16,8 @@ export const CreatePost = createAction(
   '[Create a Post] Create Post',
   props<{ post: PostPayload }>()
 );
+
+export const GetFilteredPostList = createAction(
+  '[Posts] get all filtered posts',
+  props<{searchString: string}>()
+)

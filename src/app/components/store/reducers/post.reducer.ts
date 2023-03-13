@@ -10,13 +10,25 @@ import * as PostActions from '../actions/post.actions';
 
 export interface State {
   posts: Post[];
+  searchString: null;
+  filteredPosts: [];
 }
 
 const initialState: State = {
   posts: [],
+  searchString: null,
+  filteredPosts: [],
 };
 
 const postReducer = createReducer(
+  initialState,
+  on(PostActions.GetListSuccess, (state, action) => ({
+    ...state,
+    posts: [...action.payload],
+  }))
+);
+
+const filterPostsReducer = createReducer(
   initialState,
   on(PostActions.GetListSuccess, (state, action) => ({
     ...state,

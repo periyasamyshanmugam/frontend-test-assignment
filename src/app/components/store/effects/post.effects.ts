@@ -7,7 +7,7 @@ import { catchError, concatMap, exhaustMap, map, switchMap, tap } from 'rxjs/ope
 
 import * as PostActions from '../actions/post.actions';
 import * as fromApp from '../../../store/app.reducer';
-import { GetList, GetListSuccess, GetListFail, CreatePost } from '../actions/post.actions';
+import { GetList, GetListSuccess, GetListFail, CreatePost, GetFilteredPostList } from '../actions/post.actions';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -26,19 +26,31 @@ export class PostEffects {
     );
   });
 
-  createCourse$ = createEffect(() =>
+  public createCourse$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CreatePost),
       concatMap((action) => this._postsService.createPost(action.post)),
       tap(() => this.router.navigateByUrl('/post-list'))
     ),
-    {dispatch: false}
+    { dispatch: false }
   );
+
+  public filterPosts$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GetFilteredPostList),
+      exhaustMap((action) =>
+        this._postsService.postsFilter(action.searchString).pipe(
+          map((items) => GetListSuccess(items)),
+          catchError((error) => of(GetListFail(error)))
+        )
+      )
+    );
+  });
 
   constructor(
     private actions$: Actions,
     private store: Store<fromApp.State>,
     private _postsService: PostsService,
     private router: Router
-  ) {}
+  ) { }
 }

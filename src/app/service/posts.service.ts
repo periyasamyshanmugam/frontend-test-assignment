@@ -11,7 +11,7 @@ import { Post, PostPayload } from '../models/post.model';
 export class PostsService {
   private readonly baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAllPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(this.baseUrl + AppUrlConstant.POSTS);
@@ -19,5 +19,9 @@ export class PostsService {
 
   createPost(payload: PostPayload): Observable<Post> {
     return this.http.post<Post>(this.baseUrl + AppUrlConstant.POSTS, payload);
+  }
+
+  postsFilter(searchString: string): Observable<Post[]> {
+    return this.http.get<Post[]>(this.baseUrl + AppUrlConstant.POSTS + '?title_like=' + searchString);
   }
 }
