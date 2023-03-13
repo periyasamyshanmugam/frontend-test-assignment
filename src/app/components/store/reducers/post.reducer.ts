@@ -1,8 +1,6 @@
 import {
   Action,
-  createFeatureSelector,
   createReducer,
-  createSelector,
   on,
 } from '@ngrx/store';
 import { Post } from '../../../models/post.model';
@@ -21,14 +19,6 @@ const initialState: State = {
 };
 
 const postReducer = createReducer(
-  initialState,
-  on(PostActions.GetListSuccess, (state, action) => ({
-    ...state,
-    posts: [...action.payload],
-  }))
-);
-
-const filterPostsReducer = createReducer(
   initialState,
   on(PostActions.GetListSuccess, (state, action) => ({
     ...state,

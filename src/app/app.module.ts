@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { HeaderComponent } from './header/header.component';
 import { EffectsModule } from '@ngrx/effects';
-import { PostEffects } from './components/store/effects/post.effects';
 import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,9 +12,8 @@ import { AppComponent } from './app.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { PostDetailsComponent } from './components/post-list/post-details/post-details.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
-
 import * as fromApp from './store/app.reducer';
-import { HttpClientModule } from '@angular/common/http';
+import { PostEffects } from './components/store/effects/post.effects';
 
 @NgModule({
   declarations: [
@@ -36,4 +35,4 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

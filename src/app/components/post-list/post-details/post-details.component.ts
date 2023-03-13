@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map, Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import * as fromApp from '../../../store/app.reducer';
 import { getPostById } from '../../store/selectors/post.selector';
@@ -16,21 +16,18 @@ export class PostDetailsComponent implements OnInit {
   post: Observable<Post | null | undefined>;
   id: number;
 
+  // Get data
   getData = () => this.store.select(getPostById(this.id));
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private store: Store<fromApp.State>
-  ) {}
+  ) { }
 
   ngOnInit() {
+    // Getting id from url params
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
   }
-
-  // getData() {
-  //   return this.store.select(getPostById(this.id));
-  // }
 }

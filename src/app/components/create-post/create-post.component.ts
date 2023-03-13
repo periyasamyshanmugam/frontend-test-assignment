@@ -1,11 +1,12 @@
-import { Post, PostPayload } from './../../models/post.model';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { Store } from '@ngrx/store';
 
 import * as fromApp from '../../store/app.reducer';
 import { CreatePost } from './../store/actions/post.actions';
+import { PostPayload } from './../../models/post.model';
 
 @Component({
   selector: 'app-create-post',
@@ -15,10 +16,12 @@ import { CreatePost } from './../store/actions/post.actions';
 export class CreatePostComponent implements OnInit {
   public createPostForm: FormGroup;
 
+  // To get title form field control
   get titleControl() {
     return this.createPostForm.get('title') as FormControl;
   }
 
+  // To get body form field control
   get bodyControl() {
     return this.createPostForm.get('body') as FormControl;
   }
@@ -27,9 +30,10 @@ export class CreatePostComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private store: Store<fromApp.State>
-  ) {}
+  ) { }
 
   ngOnInit() {
+    // Initiating form.
     this.initForm();
   }
 
@@ -38,7 +42,7 @@ export class CreatePostComponent implements OnInit {
    */
   initForm() {
     this.createPostForm = new FormGroup({
-      title: new FormControl('', [Validators.required]),
+      title: new FormControl('', [Validators.required, Validators.pattern(/^x/)]),
       body: new FormControl('', Validators.required),
     });
   }

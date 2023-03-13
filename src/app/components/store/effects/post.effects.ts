@@ -1,15 +1,15 @@
-import { Post } from '../../../models/post.model';
-import { PostsService } from '../../../service/posts.service';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, concatMap, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, concatMap, exhaustMap, map, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
-import * as PostActions from '../actions/post.actions';
 import * as fromApp from '../../../store/app.reducer';
 import { GetList, GetListSuccess, GetListFail, CreatePost, GetFilteredPostList } from '../actions/post.actions';
-import { of } from 'rxjs';
-import { Router } from '@angular/router';
+import { PostsService } from '../../../service/posts.service';
+
 
 @Injectable()
 export class PostEffects {

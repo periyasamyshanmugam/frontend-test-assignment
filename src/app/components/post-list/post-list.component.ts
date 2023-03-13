@@ -1,11 +1,13 @@
-import { Post } from './../../models/post.model';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+
 import { select, Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
+
 import { selectList } from 'src/app/store/app.reducer';
 import { GetFilteredPostList, GetList } from '../store/actions/post.actions';
 import { State } from '../store/reducers/post.reducer';
-import { FormControl } from '@angular/forms';
+import { Post } from './../../models/post.model';
 
 @Component({
   selector: 'app-post-list',
